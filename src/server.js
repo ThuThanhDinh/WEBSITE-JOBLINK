@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import connection from "./config/connectDB";
 import cors from "cors";
 import configCors from "./config/cors";
+import path from "path";
 //var cookieParser = require('cookie-parser')
 //import cookieParser from "cookie-parser";
 
@@ -38,6 +39,8 @@ connection();
 
 initWebRoutes(app);
 initApiRoutes(app);
+app.use("/image", express.static(path.join(__dirname, "public/image")));
+app.use("/fileCV", express.static(path.join(__dirname, "public/fileCV")));
 
 app.use((req, res) => {
   return res.send("404 not found");

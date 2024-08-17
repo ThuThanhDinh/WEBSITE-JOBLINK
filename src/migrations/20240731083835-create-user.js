@@ -25,15 +25,15 @@ module.exports = {
         type: Sequelize.ENUM("Male", "Female", "Other"),
         allowNull: true,
       },
-      phone_number: {
+      phoneNumber: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      user_type: {
+      userType: {
         type: Sequelize.ENUM("employer", "applicant"),
         allowNull: false,
       },
-      company_name: {
+      companyName: {
         type: Sequelize.STRING,
         allowNull: true,
       },
@@ -45,7 +45,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      profile_picture: {
+      imageFile: {
         type: Sequelize.STRING,
         allowNull: true,
       },

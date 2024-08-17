@@ -16,6 +16,21 @@ const initApiRoutes = (app) => {
   router.all("*", checkUserJWT);
   router.post("/applicant/sign-up", apiController.handleCreateNewUser);
   router.post("/applicant/login", apiController.handleUserLogin);
+  router.post(
+    "/applicant/profile-update",
+    apiController.handleUserProfileUpdate
+  );
+
+  router.post("/applicant/create-cv", apiController.handleCreateCV);
+  router.post(
+    "/applicant/update-not-default-cv",
+    apiController.handleUpdateNotDefaultCV
+  );
+
+  router.get(
+    "/applicant/fetch-all-cv-by-userid",
+    apiController.handleFetchAllCVByUserId
+  );
   // router.post("/users/login", apiController.handleLogin)
   // router.post("/doctors/send-blood-request", apiController.handleSendBoodRequest)
   // router.get("/admin/get-all-request", apiController.handleAllRequest)

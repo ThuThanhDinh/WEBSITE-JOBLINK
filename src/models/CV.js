@@ -4,7 +4,7 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class CV extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,10 +12,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      CV.belongsTo(models.User, { foreignKey: "userId" });
     }
   }
 
-  User.init(
+  CV.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -23,46 +24,28 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      fullName: {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "User", // Tên model mà khóa ngoại tham chiếu đến
+          key: "id", // Cột mà khóa ngoại tham chiếu đến
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+      nameCV: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
+      CVFile: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      gender: {
-        type: DataTypes.ENUM("Male", "Female", "Other"),
+      isDefault: {
+        type: DataTypes.BOOLEAN,
         allowNull: true,
-      },
-      phoneNumber: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      userType: {
-        type: DataTypes.ENUM("employer", "applicant"),
-        allowNull: false,
-      },
-      companyName: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      workplace: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      address: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      imageFile: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        //defaultValue: false,
       },
       createdAt: {
         allowNull: false,
@@ -73,13 +56,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
+        onUpdate: DataTypes.NOW,
       },
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: "CV",
+      tableName: "CV",
     }
   );
 
-  return User;
+  return CV;
 };
