@@ -273,6 +273,34 @@ const handleFetchAllCVByUserId = async (req, res) => {
   }
 };
 
+const handleSetDefaultCV = async (req, res) => {
+  try {
+    // Kiểm tra dữ liệu đầu vào
+    const { userId, cvId } = req.body;
+
+    if (!userId || !cvId) {
+      console.error("Missing required parameters:", { userId, cvId });
+      return res.status(400).json({
+        EM: "Missing required parameters",
+        EC: "1",
+        DT: "",
+      });
+    }
+
+    // Call the service function to update the default CV
+    const result = await userService.userSetDefaultCV(userId, cvId);
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error during default CV update:", error);
+    return res.status(500).json({
+      EM: "Unknown error occurred",
+      EC: "-1",
+      DT: "",
+    });
+  }
+};
+
 const apiController = {
   handleCreateNewUser,
   handleUserLogin,
@@ -280,6 +308,7 @@ const apiController = {
   handleCreateCV,
   handleUpdateNotDefaultCV,
   handleFetchAllCVByUserId,
+  handleSetDefaultCV,
 };
 
 export default apiController;

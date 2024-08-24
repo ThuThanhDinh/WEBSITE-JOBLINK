@@ -104,6 +104,7 @@ const userLogin = async (userData) => {
             phoneNumber: user.phoneNumber,
             imageFile: user.imageFile,
             id: user.id,
+            userType: user.userType,
             // Thêm các thông tin khác nếu cần
           },
         },
@@ -262,6 +263,58 @@ const userFetchAllCVByUserId = async (userId) => {
     };
   }
 };
+
+const userSetDefaultCV = async (userId, cvId) => {
+  try {
+    // Bước 1: Cập nhật tất cả các CV của người dùng để isDefault: false
+    await db.CV.update(
+      { isDefault: false }, // Đặt isDefault thành false cho tất cả CV của người dùng
+      { where: { userId } } // Điều kiện là userId phải khớp
+    );
+
+    // Bước 2: Cập nhật CV được chọn để isDefault: true
+    const result = await db.CV.update(
+      { isDefault: true }, // Đặt isDefault thành true cho CV được chọn
+      { where: { id: cvId, userId } }, // Điều kiện là id và userId phải khớp
+      { returning: true } // Trả về dữ liệu CV đã cập nhật
+    );
+
+    // Trích xuất CV đã cập nhật từ kết quả trả về
+    const updatedCV = result[1] && result[1][0]; // Lấy CV từ mảng kết quả
+
+    // Kiểm tra nếu không có CV nào được cập nhật
+    if (!updatedCV) {
+      return {
+        EM: "Failed to set CV as default", // Thông báo lỗi nếu không cập nhật được CV
+        EC: 1, // Mã lỗi (1 nghĩa là không có bản ghi nào được cập nhật)
+        DT: "",
+      };
+    }
+
+    // Bước 3: Trả về thông tin của CV vừa được cập nhật
+    return {
+      EM: "Set CV as default successfully", // Thông báo thành công
+      EC: 0, // Mã lỗi (0 nghĩa là không có lỗi)
+      DT: {
+        user: {
+          cvId: updatedCV.id, // Lấy thông tin từ kết quả trả về
+          userId: updatedCV.userId,
+          nameCV: updatedCV.nameCV,
+          CVFile: updatedCV.CVFile,
+          isDefault: updatedCV.isDefault,
+        },
+      },
+    };
+  } catch (error) {
+    console.error("Error setting CV as default:", error); // Log lỗi nếu có vấn đề
+    return {
+      EM: "Error occurred while updating CVs", // Thông báo lỗi
+      EC: -1, // Mã lỗi (-1 nghĩa là có lỗi)
+      DT: "", // Không trả về dữ liệu
+    };
+  }
+};
+
 const userService = {
   createNewUser,
   checkEmailExist,
@@ -271,6 +324,7 @@ const userService = {
   userCreateCV,
   userUpdateNotDefaultCV,
   userFetchAllCVByUserId,
+  userSetDefaultCV,
 };
 
 export default userService;

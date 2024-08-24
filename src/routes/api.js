@@ -2,6 +2,7 @@ import { removeUnnecessaryItems } from "@babel/preset-env/lib/filter-items";
 import express from "express";
 // import homeController from "../controller/homeController";
 import apiController from "../controller/apiController";
+import recruiterController from "../controller/recruiterController";
 import { checkUserJWT } from "../middleware/JWTAction";
 //const apiController = require("../controller/apiController");
 const router = express.Router();
@@ -30,6 +31,20 @@ const initApiRoutes = (app) => {
   router.get(
     "/applicant/fetch-all-cv-by-userid",
     apiController.handleFetchAllCVByUserId
+  );
+
+  router.post("/applicant/set-default-cv", apiController.handleSetDefaultCV);
+
+  router.post(
+    "/recruiter/sign-up",
+    recruiterController.handleCreateNewRecruiter
+  );
+
+  router.post("/recruiter/add-job", recruiterController.handleCreateNewJob);
+
+  router.get(
+    "/recruiter/fetch-all-job-by-recruiterid",
+    recruiterController.handleFetchAllJobByRecruiterId
   );
   // router.post("/users/login", apiController.handleLogin)
   // router.post("/doctors/send-blood-request", apiController.handleSendBoodRequest)

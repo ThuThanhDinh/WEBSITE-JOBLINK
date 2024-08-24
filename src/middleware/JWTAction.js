@@ -18,7 +18,11 @@ const createJWT = (payload) => {
   return token;
 };
 
-const nonSecurePaths = ["/applicant/sign-up", "/applicant/login"];
+const nonSecurePaths = [
+  "/applicant/sign-up",
+  "/applicant/login",
+  "/recruiter/sign-up",
+];
 const verifyToken = (token) => {
   let key = process.env.JWT_SECRET;
   let data = null;
