@@ -55,6 +55,9 @@ const handleCreateNewJob = async (req, res) => {
     skills: req.body.skills,
     jobRequirements: req.body.jobRequirements,
     employerId: req.body.employerId,
+    companyLogo: req.body.companyLogo,
+    companyName: req.body.companyName,
+    companyDetail: req.body.companyDetail,
   };
 
   try {
@@ -96,10 +99,31 @@ const handleFetchAllJobByRecruiterId = async (req, res) => {
     });
   }
 };
+
+const handleFetchAllJob = async (req, res) => {
+  try {
+    // Call the create function in the service
+    let data = await recruiterService.recruiterFetchAllJob();
+
+    return res.status(200).json({
+      EM: data.EM,
+      EC: data.EC,
+      DT: data.DT,
+    });
+  } catch (error) {
+    console.error("Error during CV creation:", error);
+    return res.status(500).json({
+      EM: "Unknown error occurred",
+      EC: "-1",
+      DT: "",
+    });
+  }
+};
 const recruiterController = {
   handleCreateNewRecruiter,
   handleCreateNewJob,
   handleFetchAllJobByRecruiterId,
+  handleFetchAllJob,
 };
 
 export default recruiterController;

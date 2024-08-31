@@ -79,6 +79,9 @@ const recruiterCreateJob = async (jobData) => {
       skills: jobData.skills,
       jobRequirements: jobData.jobRequirements,
       employerId: jobData.employerId,
+      companyLogo: jobData.companyLogo,
+      companyName: jobData.companyName,
+      companyDetail: jobData.companyDetail,
     });
 
     return {
@@ -97,6 +100,9 @@ const recruiterCreateJob = async (jobData) => {
           skills: data.skills,
           jobRequirements: data.jobRequirements,
           employerId: data.employerId,
+          companyLogo: data.companyLogo,
+          companyName: data.companyName,
+          companyDetail: data.companyDetail,
         },
       },
     };
@@ -128,6 +134,9 @@ const recruiterFetchAllJobByRecruiterId = async (userId) => {
       skills: job.skills,
       jobRequirements: job.jobRequirements,
       employerId: job.employerId,
+      companyLogo: job.companyLogo,
+      companyName: job.companyName,
+      companyDetail: job.companyDetail,
     }));
 
     return {
@@ -144,12 +153,30 @@ const recruiterFetchAllJobByRecruiterId = async (userId) => {
   }
 };
 
+const recruiterFetchAllJob = async () => {
+  try {
+    const listJob = await db.Job.findAll();
+
+    return {
+      EM: "Get all successfully",
+      EC: 0,
+      DT: listJob,
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      EM: "Something went wrong in the service",
+      EC: -2,
+    };
+  }
+};
 const recruiterService = {
   createNewRecruiter,
   checkEmailExist,
   hashUserPassword,
   recruiterCreateJob,
   recruiterFetchAllJobByRecruiterId,
+  recruiterFetchAllJob,
 };
 
 export default recruiterService;

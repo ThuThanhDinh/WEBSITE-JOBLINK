@@ -70,6 +70,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      companyDetail: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      companyLogo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      companyName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       status: {
         type: DataTypes.ENUM("visible", "hidden"),
         defaultValue: "visible",

@@ -301,6 +301,33 @@ const handleSetDefaultCV = async (req, res) => {
   }
 };
 
+const handleCreateApplication = async (req, res) => {
+  // Prepare data for creating a new CV
+  const userData = {
+    jobId: req.body.jobId,
+    applicantId: req.body.applicantId,
+    cvId: req.body.cvId,
+  };
+  console.log("dhjdhfuddaaaa", userData);
+  try {
+    // Call the create function in the service
+    let data = await userService.userCreateApplication(userData);
+
+    return res.status(200).json({
+      EM: data.EM,
+      EC: data.EC,
+      DT: data.DT,
+    });
+  } catch (error) {
+    console.error("Error during CV creation:", error);
+    return res.status(500).json({
+      EM: "Unknown error occurred",
+      EC: "-1",
+      DT: "",
+    });
+  }
+};
+
 const apiController = {
   handleCreateNewUser,
   handleUserLogin,
@@ -309,6 +336,7 @@ const apiController = {
   handleUpdateNotDefaultCV,
   handleFetchAllCVByUserId,
   handleSetDefaultCV,
+  handleCreateApplication,
 };
 
 export default apiController;

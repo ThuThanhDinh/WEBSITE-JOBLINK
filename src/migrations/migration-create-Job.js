@@ -55,6 +55,18 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      companyDetail: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      companyLogo: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      companyName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       status: {
         type: Sequelize.ENUM("visible", "hidden"),
         defaultValue: "visible",

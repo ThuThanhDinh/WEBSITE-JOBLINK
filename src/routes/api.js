@@ -36,6 +36,11 @@ const initApiRoutes = (app) => {
   router.post("/applicant/set-default-cv", apiController.handleSetDefaultCV);
 
   router.post(
+    "/applicant/create-application",
+    apiController.handleCreateApplication
+  );
+
+  router.post(
     "/recruiter/sign-up",
     recruiterController.handleCreateNewRecruiter
   );
@@ -46,6 +51,8 @@ const initApiRoutes = (app) => {
     "/recruiter/fetch-all-job-by-recruiterid",
     recruiterController.handleFetchAllJobByRecruiterId
   );
+
+  router.get("/recruiter/fetch-all-job", recruiterController.handleFetchAllJob);
   // router.post("/users/login", apiController.handleLogin)
   // router.post("/doctors/send-blood-request", apiController.handleSendBoodRequest)
   // router.get("/admin/get-all-request", apiController.handleAllRequest)
