@@ -3,6 +3,9 @@ import express from "express";
 // import homeController from "../controller/homeController";
 import apiController from "../controller/apiController";
 import recruiterController from "../controller/recruiterController";
+
+import adminController from "../controller/adminController";
+
 import { checkUserJWT } from "../middleware/JWTAction";
 //const apiController = require("../controller/apiController");
 const router = express.Router();
@@ -52,7 +55,14 @@ const initApiRoutes = (app) => {
     recruiterController.handleFetchAllJobByRecruiterId
   );
 
+  router.get(
+    "/recruiter/fetch-all-application-by-recruiter-id",
+    recruiterController.handleFetchAllApplicationByRecruiterId
+  );
+
   router.get("/recruiter/fetch-all-job", recruiterController.handleFetchAllJob);
+
+  router.get("/admin/fetch-all-user", adminController.handleFetchAllUser);
   // router.post("/users/login", apiController.handleLogin)
   // router.post("/doctors/send-blood-request", apiController.handleSendBoodRequest)
   // router.get("/admin/get-all-request", apiController.handleAllRequest)

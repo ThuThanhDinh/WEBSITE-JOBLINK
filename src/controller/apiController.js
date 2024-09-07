@@ -303,6 +303,7 @@ const handleSetDefaultCV = async (req, res) => {
 
 const handleCreateApplication = async (req, res) => {
   // Prepare data for creating a new CV
+
   const userData = {
     jobId: req.body.jobId,
     applicantId: req.body.applicantId,
@@ -310,6 +311,13 @@ const handleCreateApplication = async (req, res) => {
   };
   console.log("dhjdhfuddaaaa", userData);
   try {
+    if (!req.body.jobId || !req.body.applicantId || !req.body.cvId) {
+      return res.status(200).json({
+        EM: "Missing required paramater",
+        EC: "1",
+        DT: "",
+      });
+    }
     // Call the create function in the service
     let data = await userService.userCreateApplication(userData);
 

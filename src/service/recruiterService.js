@@ -170,6 +170,57 @@ const recruiterFetchAllJob = async () => {
     };
   }
 };
+
+const recruiterFetchAllApplicationByRecruiterId = async (employerId) => {
+  try {
+    // Lấy tất cả các đơn ứng tuyển liên quan đến employerId
+    const applications = await db.Application.findAll({
+      include: [
+        {
+          model: db.Job,
+          as: "job",
+          where: { employerId: employerId }, // Điều kiện lấy công việc của employerId
+        },
+        {
+          model: db.User,
+          as: "applicant", // Lấy thông tin ứng viên
+          attributes: ["email", "fullName"], // Lấy thông tin email và tên từ User
+        },
+        {
+          model: db.CV,
+          as: "cv", // Liên kết với bảng CV để lấy thông tin CV
+          attributes: ["CVFile"], // Lấy tên file CV từ bảng CV
+        },
+      ],
+    });
+
+    console.log("applications", applications);
+    // Map qua danh sách đơn ứng tuyển và lấy thông tin cần thiết
+    const applicationData = applications.map((application) => ({
+      jobTitle: application.job?.jobTitle, // Tiêu đề công việc
+      level: application.job?.level, // Cấp độ công việc
+      email: application.applicant?.email, // Email của ứng viên
+      fullName: application.applicant?.fullName, // Tên ứng viên
+      status: application.status, // Trạng thái đơn ứng tuyển
+      CVFile: application.cv?.CVFile || null, // Lấy file CV từ bảng CV, nếu có
+      applicationId: application.id, // ID của đơn ứng tuyển
+      jobId: application.job?.id, // ID của công việc
+    }));
+
+    return {
+      EM: "Get all applications successfully",
+      EC: 0,
+      DT: applicationData, // Dữ liệu trả về
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      EM: "Something went wrong in the service",
+      EC: -2,
+    };
+  }
+};
+
 const recruiterService = {
   createNewRecruiter,
   checkEmailExist,
@@ -177,6 +228,7 @@ const recruiterService = {
   recruiterCreateJob,
   recruiterFetchAllJobByRecruiterId,
   recruiterFetchAllJob,
+  recruiterFetchAllApplicationByRecruiterId,
 };
 
 export default recruiterService;

@@ -119,11 +119,35 @@ const handleFetchAllJob = async (req, res) => {
     });
   }
 };
+
+const handleFetchAllApplicationByRecruiterId = async (req, res) => {
+  const employerId = req.query.employerId;
+  try {
+    // Call the create function in the service
+    let data = await recruiterService.recruiterFetchAllApplicationByRecruiterId(
+      employerId
+    );
+
+    return res.status(200).json({
+      EM: data.EM,
+      EC: data.EC,
+      DT: data.DT,
+    });
+  } catch (error) {
+    console.error("Error during CV creation:", error);
+    return res.status(500).json({
+      EM: "Unknown error occurred",
+      EC: "-1",
+      DT: "",
+    });
+  }
+};
 const recruiterController = {
   handleCreateNewRecruiter,
   handleCreateNewJob,
   handleFetchAllJobByRecruiterId,
   handleFetchAllJob,
+  handleFetchAllApplicationByRecruiterId,
 };
 
 export default recruiterController;
