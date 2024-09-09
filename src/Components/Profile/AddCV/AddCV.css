@@ -1,0 +1,35 @@
+.embed-preview {
+  max-height: 400px; /* Adjust based on your layout */
+  margin-top: 20px; /* Ensure space above */
+  border: 1px solid #ccc; /* Optional: Add a border */
+}
+/* Add this to your existing CSS file */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Adjust the opacity here */
+  z-index: 40; /* Ensure it is behind the modal but above the rest of the content */
+}
+
+.modal-content {
+  position: relative;
+  z-index: 50; /* Ensure it is above the overlay */
+}
+
+/* Add this to your existing CSS file */
+.modal-button-yes {
+  background-color: #df4710;
+  border-color: #df4710;
+  color: white;
+}
+
+.modal-button-yes:hover {
+  background-color: #bf3e0a; /* Optional: add a hover color if desired */
+}
+
+.modal-button-yes:focus {
+  box-shadow: 0 0 0 3px rgba(223, 71, 16, 0.4); /* Optional: add a focus ring if desired */
+}

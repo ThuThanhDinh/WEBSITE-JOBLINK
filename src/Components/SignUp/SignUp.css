@@ -1,0 +1,22 @@
+.primary-button {
+  background-color: #df4710;
+}
+
+.primary-button:hover {
+  background-color: #c43c0e;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #df4710;
+  font-weight: bold;
+}
+
+.link-button:hover {
+  color: #c43c0e;
+}
